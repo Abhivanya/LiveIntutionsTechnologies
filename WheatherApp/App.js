@@ -13,6 +13,7 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}
+        initialRouteName="Signup"
       >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
