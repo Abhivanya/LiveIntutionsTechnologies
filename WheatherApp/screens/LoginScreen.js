@@ -3,10 +3,16 @@ import React from "react";
 
 const LoginScreen = () => {
   return (
-    <View>
-      <Text style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        LoginScreen
-      </Text>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        color: "black",
+      }}
+    >
+      <Text>LoginScreen</Text>
+      <Text>where it's hso</Text>
     </View>
   );
 };

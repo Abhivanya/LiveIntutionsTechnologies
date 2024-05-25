@@ -3,28 +3,28 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
-import { Pressable, View } from "react-native";
+import { Pressable, View, Text } from "react-native";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ header: false }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Login" component={SignupScreen} />
+        <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen
           name="Home"
           options={{
-            header: true,
-            headerTitle: () => {
+            headerRight: () => <Text>Logout</Text>,
+            headerShown: true,
+            headerTitle: (prps) => {
               <View>
                 <Text>Wheather App</Text>
               </View>;
-            },
-            headerRight: () => {
-              <Pressable>
-                <Text>Logout</Text>
-              </Pressable>;
             },
           }}
           component={HomeScreen}
