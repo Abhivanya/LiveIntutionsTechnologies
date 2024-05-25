@@ -4,6 +4,7 @@ import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import { Pressable, View, Text } from "react-native";
+import Logout from "./components/Logout.js";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -13,14 +14,14 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="Signup"
+        initialRouteName="login"
       >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
         <Stack.Screen
           name="Home"
           options={{
-            headerRight: () => <Text>Logout</Text>,
+            headerRight: () => <Logout />,
             headerShown: true,
             headerTitle: (prps) => {
               <View>

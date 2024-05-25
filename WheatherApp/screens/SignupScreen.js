@@ -1,3 +1,5 @@
+// screens/SignupScreen.js
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,11 +8,10 @@ import {
   View,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FIREBASE_AUTH } from "../config/firebaseConfig";
 
-const SignupScreen = ({ Navigation }) => {
+const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,12 +19,23 @@ const SignupScreen = ({ Navigation }) => {
 
   const handleSignup = async () => {
     try {
+      setIsLoading(true);
       await createUserWithEmailAndPassword(auth, email, password);
-      Navigation.navigate("Login", { isRegistered: true });
+      setIsLoading(false);
+      navigation.navigate("Login");
     } catch (error) {
-      Alert.alert("Registration error :" + error.message);
+      setIsLoading(false);
+      if (error.code === "auth/email-already-in-use") {
+        Alert.alert(
+          "Registration Error",
+          "The email address is already in use by another account."
+        );
+      } else {
+        Alert.alert("Registration Error", error.message);
+      }
     }
   };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Register</Text>
@@ -37,15 +49,21 @@ const SignupScreen = ({ Navigation }) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="password"
+        placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>Signup</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleSignup}
+        disabled={isLoading}
+      >
+        <Text style={styles.buttonText}>
+          {isLoading ? "Loading..." : "Signup"}
+        </Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => Navigation.navigate("Login")}>
+      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text style={styles.link}>Already have an account? Login</Text>
       </TouchableOpacity>
     </View>
